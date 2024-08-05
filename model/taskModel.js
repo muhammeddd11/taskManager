@@ -3,8 +3,7 @@ const taskSchema = mongoose.Schema({
     name: {
         type: String,
         required: [true, 'A task must have a name'],
-        trim: true,
-        maxlength: [20, "Task name should be less than 20 characters"]
+        trim: true
     },
     difficulty: {
         type: String,
@@ -34,6 +33,6 @@ const taskSchema = mongoose.Schema({
     steps: String
 
 });
-const Task = mongoose.Model('Task', taskSchema);
+const Task = mongoose.model('Task', taskSchema);
 
 module.exports = Task
