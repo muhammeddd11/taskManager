@@ -1,5 +1,6 @@
 // define the variables and require modules
 const taskRouter = require("./routes/taskRouter");
+const userRouter = require('./routes/userRouter')
 const express = require('express');
 const app = express();
 
@@ -16,6 +17,7 @@ app.use((req, res, next) => {
 
 // define the routes 
 
+app.use('/api/v1/users', userRouter)
 app.use('/api/v1/tasks', taskRouter)
 
 // handel all undefined routes 
