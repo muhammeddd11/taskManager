@@ -1,6 +1,7 @@
 // define variables and require modules
 const taskController = require('./../controllers/taskController');
 const express = require('express');
+const authController = require('./../controllers/authController')
 // define the router that match routes to handler function
 const router = express.Router();
 
@@ -8,11 +9,11 @@ const router = express.Router();
 
 router.route('/')
     .get(taskController.getTasks)
-    .post(taskController.createTask)
+    .post(authController.protect, authController.restrictedTo('user'), taskController.createTask)
 
 router.route('/:id')
     .get(taskController.getTask)
     .delete(taskController.deleteTask)
-    .patch(taskController.updateTask)
+    .patch(authController.protect, authController.restrictedTo('user'), taskController.updateTask)
 
 module.exports = router

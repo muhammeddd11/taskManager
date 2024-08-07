@@ -27,7 +27,8 @@ exports.createTask = async (req, res) => {
         priority: req.body.priority,
         description: req.body.description,
         completed: req.body.completed,
-        steps: req.body.steps
+        steps: req.body.steps,
+        user: req.body.user
     })
     successRespone(res, 201, "A new task has been created", newTask);
 }
@@ -43,11 +44,14 @@ exports.getTasks = async (req, res) => {
 
 }
 exports.updateTask = async (req, res) => {
+
     const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
         runValidators: true
     });
-    if (!updatedTask) faildRespone(res, 404, "Task not found");
+    if (!updatedTask) return faildRespone(res, 404, "Task not found");
+    //check if the user trying to update owns the task or not
+    if (!req.user._idequals(updatedTask.user)) return faildRespone(res, 401, "you are not allowed to edit this");
     successRespone(res, 200, "Task updated", updatedTask);
 
 }

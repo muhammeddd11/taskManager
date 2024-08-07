@@ -30,7 +30,12 @@ const taskSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
-    steps: String
+    steps: String,
+    user: {
+        type: mongoose.Schema.Types.ObjectId,  // Reference to the User model
+        ref: 'User',
+        required: [true, 'A task must belong to a user']
+    }
 
 });
 const Task = mongoose.model('Task', taskSchema);
